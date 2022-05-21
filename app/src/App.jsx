@@ -2,6 +2,9 @@
 import styles from './App.module.css';
 import { Switch, Match, createSignal } from "solid-js";
 import starter from './pages/starter';
+import intro from './pages/intro';
+import documentEditer from './pages/documentEditer';
+
 function App() {
   const [login, setLogin] = createSignal(false)
   const [customer, setCustomer] = createSignal(false)
@@ -27,16 +30,16 @@ function App() {
 
       {/* <p class="btn btn-primary"  onclick={()=>{setLogin(true);console.log(this)}}>login here</p> */}
       {/* !!!!!!!!!!!!! this is solid built in routing, kinda sucks, check out https://github.com/solidjs/solid-app-router to get better rounter */}
-      <Switch fallback={<p>you are not logged in</p>}> 
+      <Switch fallback={<p>loading error</p>}> 
         <Match when={!login() && !customer()}>
           {starter(setLogin)}
         </Match>
         <Match when={login() && !customer()}>
-          <p>you logged in now but you are not a customer</p>
-          <p class="btn btn-primary" onclick={() => { setCustomer(true) }}>become a customer</p>
+          {intro(setCustomer)}
+          {/* <p class="btn btn-primary" onclick={() => { setCustomer(true) }}>get</p> */}
         </Match>
         <Match when={login() == true && customer() == true}>
-          <p>you are logged in! you are a customer</p>
+          {documentEditer}
         </Match>
       </Switch>
     </div>
